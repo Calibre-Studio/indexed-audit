@@ -93,6 +93,16 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -0.04em; line-height: 1.04; margi
 }
 .field input::placeholder { color: var(--faint); font-weight: 400; }
 .field input:focus { outline: none; border-color: var(--ink); }
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus,
+.field input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 100px var(--bg) inset;
+  box-shadow: 0 0 0 100px var(--bg) inset;
+  caret-color: var(--ink);
+  transition: background-color 9999s ease-in-out 0s;
+}
 
 .btn-primary {
   appearance: none; cursor: pointer;
