@@ -1,0 +1,29 @@
+import "./globals.css";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+export const metadata = {
+  title: "AI Visibility Audit — Calibre Studio",
+  description:
+    "See how AI sees your business. A free audit of the signals ChatGPT, Claude, Gemini, Grok, Copilot and Google AI Overviews read before they recommend anyone.",
+  openGraph: {
+    title: "AI Visibility Audit — Calibre Studio",
+    description:
+      "See how AI sees your business. The signals AI reads before it recommends you, scored.",
+    type: "website",
+  },
+  robots: { index: true, follow: true },
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
+    </html>
+  );
+}
