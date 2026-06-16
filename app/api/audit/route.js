@@ -28,6 +28,58 @@ Return ONLY valid JSON, no markdown, no preamble, matching exactly:
 }
 Aim for 5-9 findings, ordered by severity.`;
 
+// Forcing this tool guarantees the model returns valid, schema-shaped JSON
+// (no prefill, no markdown, no parsing) on any current Claude model.
+const AUDIT_TOOL = {
+  name: "emit_audit",
+  description: "Return the completed DCAT AI-visibility audit as structured data.",
+  input_schema: {
+    type: "object",
+    properties: {
+      scores: {
+        type: "object",
+        properties: {
+          discoverability: { type: "integer", minimum: 0, maximum: 100 },
+          clarity: { type: "integer", minimum: 0, maximum: 100 },
+          authority: { type: "integer", minimum: 0, maximum: 100 },
+          trust: { type: "integer", minimum: 0, maximum: 100 },
+          overall: { type: "integer", minimum: 0, maximum: 100 },
+        },
+        required: ["discoverability", "clarity", "authority", "trust", "overall"],
+      },
+      deepLayersProvisional: { type: "boolean" },
+      verdict: { type: "string" },
+      clarityNote: { type: "string" },
+      findings: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            id: { type: "string" },
+            layer: { type: "string", enum: ["Discoverability", "Clarity", "Authority", "Trust"] },
+            severity: { type: "string", enum: ["critical", "high", "medium", "low"] },
+            evidence: { type: "string" },
+            fix: { type: "string" },
+          },
+          required: ["layer", "severity", "evidence", "fix"],
+        },
+      },
+      ninetyDayPlan: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            phase: { type: "string" },
+            items: { type: "array", items: { type: "string" } },
+          },
+          required: ["phase", "items"],
+        },
+      },
+    },
+    required: ["scores", "verdict", "findings", "ninetyDayPlan"],
+  },
+};
+
 function buildPrompt(audit) {
   return `CURRENT DATE: ${new Date().toISOString().slice(0, 10)}
 SITE: ${audit.url}
@@ -139,25 +191,26 @@ export async function POST(req) {
 
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const basePrompt = buildPrompt(audit);
-    let data = null, lastRaw = "";
+    let data = null;
     for (let attempt = 0; attempt < 2 && !data; attempt++) {
-      const nudge = attempt === 0 ? "" : "\n\nReturn ONLY the complete, valid JSON object — no prose, no code fences.";
       const msg = await client.messages.create({
         model: MODEL,
         max_tokens: 8192,
         system: SYSTEM,
-        messages: [
-          { role: "user", content: basePrompt + nudge },
-          { role: "assistant", content: "{" }, // prefill: forces a JSON-only continuation (no preamble/markdown)
-        ],
+        tools: [AUDIT_TOOL],
+        tool_choice: { type: "tool", name: "emit_audit" },
+        messages: [{ role: "user", content: basePrompt }],
       });
-      // The prefilled "{" is not echoed back by the API — prepend it to rebuild the object.
-      lastRaw = "{" + (msg.content?.[0]?.text || "");
-      const parsed = extractJson(lastRaw);
-      if (validReport(parsed)) data = parsed;
+      const blocks = msg.content || [];
+      let candidate = blocks.find((b) => b.type === "tool_use")?.input || null;
+      if (!candidate) {
+        // Defensive: if a model ever answers in text despite the forced tool, parse it.
+        candidate = extractJson(blocks.find((b) => b.type === "text")?.text || "");
+      }
+      if (validReport(candidate)) data = candidate;
     }
     if (!data) {
-      console.error("Audit fell back to deterministic after retries. Raw (first 600):", lastRaw.slice(0, 600));
+      console.error("Audit fell back to deterministic after retries (no valid tool output).");
       return Response.json(deterministicReport(audit));
     }
     return Response.json({ url: audit.url, signals: audit.signals, ...data, model: MODEL });
