@@ -2,7 +2,8 @@ import Anthropic from "@anthropic-ai/sdk";
 import { auditSite } from "../../../lib/checks";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+// 120s headroom so heavy sites (Sonnet + slow scrapes near 50-55s) never hit the limit.
+export const maxDuration = 120;
 
 // Pinned. This tool must always run on Claude Sonnet 4.6.
 // Hardcoded so it can never silently fall back to another model via env config.
@@ -285,7 +286,9 @@ export async function POST(req) {
       console.error("Audit fell back to deterministic after retries (no valid tool output).");
       return Response.json(deterministicReport(audit));
     }
-    return Response.json({ url: audit.url, signals: audit.signals, ...stripDashes(data), model: MODEL });
+    // Note: the raw signals object is intentionally NOT returned. The UI does not
+    // use it, and its camelCase keys should never reach the client payload.
+    return Response.json({ url: audit.url, ...stripDashes(data), model: MODEL });
   } catch (e) {
     return Response.json({ error: String(e?.message || e) }, { status: 500 });
   }
