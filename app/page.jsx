@@ -239,7 +239,7 @@ export default function Page() {
           <div className="footer-top">
             <div className={`footer-left${reelOpen ? " reel-open" : ""}`}>
               <p className="footer-tagline reveal">Exploring the space between art and technology</p>
-              <button type="button" className="footer-reel" onClick={() => setReelOpen((o) => !o)} aria-expanded={reelOpen} aria-label={reelOpen ? "Collapse showreel" : "Expand showreel"}>
+              <button type="button" className="footer-reel" onClick={() => { if (typeof window !== "undefined" && window.innerWidth > 560) setReelOpen((o) => !o); }} aria-expanded={reelOpen} aria-label={reelOpen ? "Collapse showreel" : "Expand showreel"}>
                 <span className="footer-reel-frame">
                   <video src={REEL} autoPlay muted loop playsInline preload="metadata" />
                 </span>

@@ -227,8 +227,8 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .footer-socials { display: flex; align-items: center; gap: 22px; padding-top: 0; }
 .footer-socials a { color: var(--ink); display: inline-flex; transition: opacity 0.2s var(--ease); }
 .footer-socials a:hover { opacity: 0.5; }
-.footer-wordmark { display: inline-flex; align-items: flex-start; gap: 8px; margin-top: auto; }
-.footer-wordmark img { height: clamp(40px, 7.5vw, 88px); width: auto; display: block; }
+.footer-wordmark { display: inline-flex; align-items: flex-start; gap: 8px; margin-top: auto; max-width: 100%; min-width: 0; }
+.footer-wordmark img { height: clamp(26px, 7vw, 88px); width: auto; max-width: 100%; display: block; }
 .footer-reg { font-size: clamp(20px, 3.75vw, 44px); line-height: 1; }
 .footer-actions { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px 32px; flex-wrap: wrap; padding-top: clamp(40px, 7vw, 80px); }
 .footer-totop { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; color: var(--ink); display: inline-flex; align-items: center; gap: 10px; }
@@ -248,7 +248,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 @media (max-width: 560px) {
   .footer-rowgroup { grid-template-columns: 1fr; gap: 12px; }
   .footer-collabel { padding-top: 0; }
-  .footer-reel { align-self: stretch; width: 100%; }
+  .footer-reel { align-self: stretch; width: 100%; cursor: default; }
   .footer-legal { flex-direction: column; align-items: flex-start; }
 }
 
