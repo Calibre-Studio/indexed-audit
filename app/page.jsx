@@ -201,7 +201,7 @@ export default function Page() {
               <label htmlFor="email">Email</label>
               <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@brand.com" autoComplete="email" />
             </div>
-            <button className="btn-primary" disabled={loading}>
+            <button className={`btn-primary${loading ? " is-auditing" : ""}`} disabled={loading}>
               <span>{loading ? "Auditing…" : "Run my free audit"}</span>
               {!loading && <span className="arr" aria-hidden="true">→</span>}
             </button>
