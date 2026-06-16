@@ -19,6 +19,8 @@ Rules (these are hard, not preferences):
 - Voice: direct, spare, no hype words. Short declarative sentences.
 - Never use em dashes or en dashes (the "—" or "–" characters) anywhere in your output. Use a comma, a period, parentheses, or the word "to" instead. For numeric ranges use a plain hyphen, for example "Days 1-30".
 - The signals JSON uses short internal field names. In your writing, always use the real-world names, never the field names. Specifically: write "llms.txt" not "llmsTxt", "llms-full.txt" not "llmsFullTxt", "robots.txt" not "robotsTxt", "sitemap.xml" not "sitemapXml", "JSON-LD" not "jsonLdCount", "meta description" not "metaDescription", "og:image" not "ogImage", "canonical tag" not "hasCanonical". Write for a business owner, not a developer reading variable names.
+- Always keep a normal space between every word and after element or tag names. Write "18 H1 tags", "the title tag", "no og:image set", never run tokens together like "H1tags", "titletag", or "H1and". One space, never zero.
+- Quality bar: write like a senior strategist who has clearly read THIS specific site. Use the real business name, its location, and its actual offer. For every finding, make the business consequence plain: what an AI engine gets wrong because of the gap, and what that costs them in being found, understood, or recommended when a customer asks AI for a business like theirs. Specific and concrete beats generic every time. The reader should finish the report thinking "they understand my business, and I want them fixing this."
 - Treat the CURRENT DATE given in the prompt as authoritative for "today". Never flag a copyright year or any date as stale, wrong, or anomalous unless it is clearly AFTER the current date. A current-year copyright is correct, so do not tell them to change it.
 
 Return ONLY valid JSON, no markdown, no preamble, matching exactly:
@@ -84,17 +86,43 @@ const AUDIT_TOOL = {
   },
 };
 
+// Render signals as readable labels, never raw JSON keys. This keeps camelCase
+// field names (h1Count, llmsTxt, etc) out of the model's view so it cannot echo
+// them into the report. The model only ever sees plain-English labels.
+function formatSignals(s) {
+  const yn = (b) => (b ? "present" : "missing");
+  const ff = (b) => (b ? "found" : "not found");
+  const lines = [
+    `Page title: ${s.title ? `"${s.title}" (${s.titleLength} characters)` : "missing"}`,
+    `Meta description: ${s.metaDescription ? `"${s.metaDescription}" (${s.metaDescriptionLength} characters)` : "missing"}`,
+    `Canonical tag: ${yn(s.hasCanonical)}`,
+    `Open Graph title: ${yn(s.ogTitle)}`,
+    `Open Graph description: ${yn(s.ogDescription)}`,
+    `Social share image (og:image): ${yn(s.ogImage)}`,
+    `HTML language attribute: ${s.htmlLang ? `"${s.htmlLang}"` : "missing"}`,
+    `Viewport meta tag (mobile readiness): ${yn(s.hasViewport)}`,
+    `Number of H1 headings on the page: ${s.h1Count}${s.firstH1 ? ` (the first H1 reads: "${s.firstH1}")` : ""}`,
+    `JSON-LD structured data blocks: ${s.jsonLdCount}${s.schemaTypes && s.schemaTypes.length ? ` (schema types found: ${s.schemaTypes.join(", ")})` : " (no schema types found)"}`,
+    `robots.txt file: ${ff(s.robotsTxt)}`,
+    `sitemap.xml file: ${ff(s.sitemapXml)}`,
+    `llms.txt file: ${ff(s.llmsTxt)}`,
+    `llms-full.txt file: ${ff(s.llmsFullTxt)}`,
+    `Homepage word count: ${s.wordCount}`,
+  ];
+  return lines.map((l) => "- " + l).join("\n");
+}
+
 function buildPrompt(audit) {
   return `CURRENT DATE: ${new Date().toISOString().slice(0, 10)}
 SITE: ${audit.url}
 
-STRUCTURAL SIGNALS (from the homepage + site root):
-${JSON.stringify(audit.signals, null, 2)}
+STRUCTURAL SIGNALS (read from the homepage and site root):
+${formatSignals(audit.signals)}
 
 HOMEPAGE TEXT (truncated):
 """${audit.homepageText}"""
 
-Produce the DCAT audit JSON now.`;
+Produce the DCAT audit now.`;
 }
 
 function clamp(n) {
@@ -186,13 +214,26 @@ function stripDashes(v) {
       .replace(/\s*[—–]\s*/g, ", ")
       .replace(/,\s*,/g, ", ")
       .replace(/\s+,/g, ",")
+      // internal signal field names to plain English (compound names first)
       .replace(/\bllmsFullTxt\b/gi, "llms-full.txt")
       .replace(/\bllmsTxt\b/gi, "llms.txt")
       .replace(/\brobotsTxt\b/gi, "robots.txt")
       .replace(/\bsitemapXml\b/gi, "sitemap.xml")
-      .replace(/\bjsonLd(Count)?\b/g, "JSON-LD")
+      .replace(/\bmetaDescriptionLength\b/g, "meta description length")
       .replace(/\bmetaDescription\b/g, "meta description")
-      .replace(/\bogImage\b/g, "og:image");
+      .replace(/\btitleLength\b/g, "title length")
+      .replace(/\bjsonLdCount\b/g, "JSON-LD count")
+      .replace(/\bjsonLd\b/g, "JSON-LD")
+      .replace(/\bschemaTypes\b/g, "schema types")
+      .replace(/\bh1Count\b/g, "number of H1 tags")
+      .replace(/\bfirstH1\b/g, "first H1")
+      .replace(/\bhasCanonical\b/g, "canonical tag")
+      .replace(/\bhasViewport\b/g, "viewport meta tag")
+      .replace(/\bogImage\b/g, "og:image")
+      .replace(/\bogTitle\b/g, "og:title")
+      .replace(/\bogDescription\b/g, "og:description")
+      .replace(/\bhtmlLang\b/g, "HTML language attribute")
+      .replace(/\bwordCount\b/g, "word count");
   }
   if (Array.isArray(v)) return v.map(stripDashes);
   if (v && typeof v === "object") {
