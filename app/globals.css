@@ -217,7 +217,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .footer-rowgroup { display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: start; }
 .footer-collabel { font-family: var(--font-mono), ui-monospace, Menlo, monospace; font-size: var(--label); text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); padding-top: 13px; }
 .footer-list { list-style: none; margin: 0; padding: 0; }
-.footer-list li { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding: 11px 0; }
+.footer-list li { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 11px 0; }
 .footer-list a { font-family: var(--font-mono), ui-monospace, Menlo, monospace; text-transform: uppercase; font-size: 0.82rem; letter-spacing: 0.06em; color: var(--ink); transition: opacity 0.2s var(--ease); }
 .footer-list a:hover { opacity: 0.5; }
 .footer-list li > span { display: inline-block; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); font-size: 0; transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
