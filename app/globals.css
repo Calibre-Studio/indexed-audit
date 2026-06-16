@@ -236,7 +236,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .footer-totop:hover span { transform: translateY(-4px); }
 .footer-book { height: 54px; padding: 0 30px; width: auto; }
 .footer-legal { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; margin-top: 0; padding-top: 24px; border-top: 1px solid var(--line); }
-.footer-legal-left, .footer-legal-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.footer-legal-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .footer-legal a, .footer-legal span { font-family: var(--font-mono), ui-monospace, Menlo, monospace; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; color: var(--faint); }
 .footer-legal a { transition: color 0.2s var(--ease); }
 .footer-legal a:hover { color: var(--ink); }
