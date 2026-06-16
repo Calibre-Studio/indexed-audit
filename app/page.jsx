@@ -118,9 +118,21 @@ export default function Page() {
   // entrance + scroll reveals
   useEffect(() => {
     document.body.classList.add("js");
+    const revealOnce = () => document.querySelectorAll(".reveal, .stagger");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    const els = document.querySelectorAll(".reveal, .stagger");
+    if (reduced) {
+      document.querySelectorAll(".reveal, .stagger, .hero-reveal").forEach((el) => el.classList.add("in"));
+      return;
+    }
+
+    // Reveal anything already in view on mount so the hero (and any above-the-fold
+    // content) paints immediately instead of waiting on the observer callback.
+    const vh = window.innerHeight || 0;
+    document.querySelectorAll(".reveal, .stagger, .hero-reveal").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.92 && r.bottom > 0) el.classList.add("in");
+    });
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
@@ -132,7 +144,7 @@ export default function Page() {
       },
       { rootMargin: "0px 0px -6% 0px", threshold: 0.08 }
     );
-    els.forEach((el) => io.observe(el));
+    revealOnce().forEach((el) => io.observe(el));
 
     // hero copy: replay the reveal each time it enters the viewport
     const heroIO = new IntersectionObserver(
@@ -141,9 +153,14 @@ export default function Page() {
     );
     document.querySelectorAll(".hero-reveal").forEach((el) => heroIO.observe(el));
 
+    // Safety net: if any reveal is still hidden after 1.4s (observer never fired on a
+    // slow or headless render), force it visible. Content can never ship blank.
+    const safety = setTimeout(() => revealOnce().forEach((el) => el.classList.add("in")), 1400);
+
     return () => {
       io.disconnect();
       heroIO.disconnect();
+      clearTimeout(safety);
     };
   }, [report, loading]);
 

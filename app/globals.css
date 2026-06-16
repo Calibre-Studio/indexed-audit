@@ -279,6 +279,7 @@ body.js .hero-reveal.in .aw { animation: heroRise 0.85s var(--ease) both; animat
 
 @media (prefers-reduced-motion: reduce) {
   body.js .reveal, body.js .stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  body.js .hero-reveal .ar, body.js .hero-reveal .aw { opacity: 1 !important; transform: none !important; animation: none !important; filter: none !important; }
   body.js .ar, body.js .aw { opacity: 1 !important; animation: none !important; transform: none !important; filter: none !important; }
   .fill { transition: none !important; }
   .btn-primary .arr, .btn-link .arr, .nav-cta .arr { transition: none; }
