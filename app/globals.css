@@ -199,21 +199,51 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .proof { padding: clamp(48px, 6.5vw, 80px) 0 clamp(56px, 9vw, 100px); border-top: 1px solid var(--line); text-align: center; }
 .proof .eyebrow { margin-bottom: clamp(40px, 6vw, 66px); }
 
-/* ---------- footer ---------- */
-.footer { border-top: 1px solid var(--line); padding: clamp(64px, 9vw, 120px) 0 40px; }
-.footer-tagline { font-size: var(--h2); font-weight: 600; letter-spacing: -0.04em; line-height: 1.06; max-width: 14ch; margin: 0 0 clamp(48px, 7vw, 88px); }
-.footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
-@media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px 24px; } }
-.footer-col h4 { font-family: var(--font-mono), ui-monospace, Menlo, monospace; font-size: var(--label); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin: 0 0 16px; }
-.footer-col a, .footer-col p { display: block; font-size: 0.95rem; color: var(--muted); margin: 0 0 10px; transition: color 0.25s var(--ease); }
-.footer-col a:hover { color: var(--ink); }
-.footer-col a { font-family: var(--font-mono), ui-monospace, Menlo, monospace; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.06em; }
-.footer-brand img { height: 26px; width: auto; margin-top: -6px; margin-bottom: 18px; }
-.footer-bottom { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; margin-top: clamp(48px, 7vw, 80px); padding-top: 26px; border-top: 1px solid var(--line); font-family: var(--font-mono), ui-monospace, Menlo, monospace; text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--faint); }
+/* ---------- footer (mirrors calibrestudio.co) ---------- */
+.footer { border-top: 1px solid var(--line); padding: clamp(56px, 8vw, 110px) 0 26px; }
+.footer-top { display: grid; grid-template-columns: 1.45fr 1fr; gap: clamp(30px, 5vw, 72px); }
+.footer-left { display: flex; flex-direction: column; }
+.footer-tagline { font-size: var(--h2); font-weight: 600; letter-spacing: -0.04em; line-height: 1.06; max-width: 13ch; margin: 0; }
+.footer-reel { display: flex; flex-direction: column; gap: 12px; margin-top: clamp(40px, 7vw, 92px); width: min(340px, 100%); }
+.footer-reel-frame { display: block; overflow: hidden; background: #000; aspect-ratio: 16 / 10; }
+.footer-reel-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.footer-reel-meta { display: flex; align-items: baseline; justify-content: space-between; }
+.footer-reel-time { font-family: var(--font-mono), ui-monospace, Menlo, monospace; font-size: 0.76rem; color: var(--faint); letter-spacing: 0.05em; }
+.footer-right { display: flex; flex-direction: column; gap: clamp(34px, 5vw, 56px); border-left: 1px solid var(--line); padding-left: clamp(26px, 4vw, 54px); }
+.footer-rowgroup { display: grid; grid-template-columns: 84px 1fr; gap: 20px; align-items: start; }
+.footer-collabel { font-family: var(--font-mono), ui-monospace, Menlo, monospace; font-size: var(--label); text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); padding-top: 13px; }
+.footer-list { list-style: none; margin: 0; padding: 0; }
+.footer-list li { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding: 11px 0; }
+.footer-list a { font-family: var(--font-mono), ui-monospace, Menlo, monospace; text-transform: uppercase; font-size: 0.82rem; letter-spacing: 0.06em; color: var(--ink); transition: opacity 0.2s var(--ease); }
+.footer-list a:hover { opacity: 0.5; }
+.footer-list li > span { color: var(--ink); font-size: 0.55rem; }
+.footer-socials { display: flex; align-items: center; gap: 22px; padding-top: 4px; }
+.footer-socials a { color: var(--ink); display: inline-flex; transition: opacity 0.2s var(--ease); }
+.footer-socials a:hover { opacity: 0.5; }
+.footer-band { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; margin-top: clamp(54px, 9vw, 120px); }
+.footer-wordmark { display: inline-flex; align-items: flex-start; gap: 8px; }
+.footer-wordmark img { height: clamp(44px, 8.5vw, 102px); width: auto; display: block; }
+.footer-reg { font-size: clamp(13px, 1.9vw, 20px); line-height: 1; }
+.footer-band-actions { display: flex; align-items: center; gap: clamp(20px, 3vw, 44px); }
+.footer-totop { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; color: var(--ink); display: inline-flex; align-items: center; gap: 10px; }
+.footer-totop span { transition: transform 0.3s var(--ease); }
+.footer-totop:hover span { transform: translateY(-4px); }
+.footer-book { height: 54px; padding: 0 30px; width: auto; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; margin-top: clamp(40px, 6vw, 64px); padding-top: 24px; border-top: 1px solid var(--line); }
+.footer-legal-left, .footer-legal-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.footer-legal a, .footer-legal span { font-family: var(--font-mono), ui-monospace, Menlo, monospace; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; color: var(--faint); }
+.footer-legal a { transition: color 0.2s var(--ease); }
+.footer-legal a:hover { color: var(--ink); }
+.footer-copy { margin-left: 6px; }
+@media (max-width: 860px) {
+  .footer-top { grid-template-columns: 1fr; gap: 46px; }
+  .footer-right { border-left: none; padding-left: 0; }
+}
 @media (max-width: 560px) {
-  .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-  .footer-brand { max-width: 32ch; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .footer-rowgroup { grid-template-columns: 1fr; gap: 12px; }
+  .footer-collabel { padding-top: 0; }
+  .footer-band { align-items: flex-start; }
+  .footer-legal { flex-direction: column; align-items: flex-start; }
 }
 
 /* ---------- motion ---------- */
