@@ -235,7 +235,7 @@ export default function Page() {
       {report && <Report report={report} shownScore={shownScore} barsReady={barsReady} />}
 
       <footer className="footer">
-        <div className="wrap">
+        <div className="footer-wrap">
           <div className="footer-top">
             <div className={`footer-left${reelOpen ? " reel-open" : ""}`}>
               <p className="footer-tagline reveal">Exploring the space between art and technology</p>
