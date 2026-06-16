@@ -16,6 +16,7 @@ Rules (these are hard, not preferences):
 - Severity tiers: critical (AI cannot reliably read/understand the page), high (materially hurts citation odds), medium (worth fixing), low (polish).
 - Voice: direct, spare, no hype words. Short declarative sentences.
 - Never use em dashes or en dashes (the "—" or "–" characters) anywhere in your output. Use a comma, a period, parentheses, or the word "to" instead. For numeric ranges use a plain hyphen, for example "Days 1-30".
+- The signals JSON uses short internal field names. In your writing, always use the real-world names, never the field names. Specifically: write "llms.txt" not "llmsTxt", "llms-full.txt" not "llmsFullTxt", "robots.txt" not "robotsTxt", "sitemap.xml" not "sitemapXml", "JSON-LD" not "jsonLdCount", "meta description" not "metaDescription", "og:image" not "ogImage", "canonical tag" not "hasCanonical". Write for a business owner, not a developer reading variable names.
 - Treat the CURRENT DATE given in the prompt as authoritative for "today". Never flag a copyright year or any date as stale, wrong, or anomalous unless it is clearly AFTER the current date. A current-year copyright is correct, so do not tell them to change it.
 
 Return ONLY valid JSON, no markdown, no preamble, matching exactly:
@@ -173,15 +174,23 @@ function validReport(d) {
   return !!(d && d.scores && typeof d.scores.overall === "number" && Array.isArray(d.findings));
 }
 
-// Hard guarantee: no em or en dashes anywhere in the rendered report text.
-// Numeric ranges (1–30) become hyphens; prose dashes become commas.
+// Hard guarantee on rendered report text: no em or en dashes (numeric ranges
+// become hyphens, prose dashes become commas), and any internal signal field
+// names get rewritten to their real-world names (llmsTxt becomes llms.txt, etc).
 function stripDashes(v) {
   if (typeof v === "string") {
     return v
       .replace(/(\d)\s*[—–]\s*(\d)/g, "$1-$2")
       .replace(/\s*[—–]\s*/g, ", ")
       .replace(/,\s*,/g, ", ")
-      .replace(/\s+,/g, ",");
+      .replace(/\s+,/g, ",")
+      .replace(/\bllmsFullTxt\b/gi, "llms-full.txt")
+      .replace(/\bllmsTxt\b/gi, "llms.txt")
+      .replace(/\brobotsTxt\b/gi, "robots.txt")
+      .replace(/\bsitemapXml\b/gi, "sitemap.xml")
+      .replace(/\bjsonLd(Count)?\b/g, "JSON-LD")
+      .replace(/\bmetaDescription\b/g, "meta description")
+      .replace(/\bogImage\b/g, "og:image");
   }
   if (Array.isArray(v)) return v.map(stripDashes);
   if (v && typeof v === "object") {
