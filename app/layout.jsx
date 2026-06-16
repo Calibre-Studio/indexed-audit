@@ -1,4 +1,5 @@
 import "./globals.css";
+import Script from "next/script";
 import { Inter, Fragment_Mono } from "next/font/google";
 
 const inter = Inter({
@@ -30,7 +31,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${fragmentMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script
+          src="https://beta.leadconnectorhq.com/loader.js"
+          data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id="68ccba8e12ad321a12f9d532"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
