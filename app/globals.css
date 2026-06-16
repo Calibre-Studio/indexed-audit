@@ -200,7 +200,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .proof .eyebrow { margin-bottom: clamp(40px, 6vw, 66px); }
 
 /* ---------- footer (mirrors calibrestudio.co) ---------- */
-.footer { border-top: 1px solid var(--line); padding: 0 0 24px; }
+.footer { border-top: 1px solid var(--line); padding: 0 0 clamp(64px, 8vh, 104px); }
 .footer-wrap { width: 100%; max-width: none; padding-inline: clamp(20px, 3vw, 44px); margin: 0; }
 .footer-top { display: grid; grid-template-columns: 1.8fr 1fr; gap: clamp(32px, 5vw, 88px); }
 .footer-left { display: flex; flex-direction: column; padding: clamp(40px, 6vw, 72px) 0 clamp(28px, 4vw, 46px); }
