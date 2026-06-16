@@ -229,7 +229,7 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .footer-socials a:hover { opacity: 0.5; }
 .footer-wordmark { display: inline-flex; align-items: flex-start; gap: 8px; margin-top: auto; }
 .footer-wordmark img { height: clamp(40px, 7.5vw, 88px); width: auto; display: block; }
-.footer-reg { font-size: clamp(18px, 2.8vw, 30px); line-height: 1; }
+.footer-reg { font-size: clamp(20px, 3.75vw, 44px); line-height: 1; }
 .footer-actions { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px 32px; flex-wrap: wrap; padding-top: clamp(40px, 7vw, 80px); }
 .footer-totop { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; color: var(--ink); display: inline-flex; align-items: center; gap: 10px; }
 .footer-totop span { transition: transform 0.3s var(--ease); }
