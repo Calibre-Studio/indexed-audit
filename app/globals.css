@@ -246,8 +246,9 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
   .footer-right { border-left: none; padding-left: 0; }
 }
 @media (max-width: 560px) {
-  .footer-rowgroup { grid-template-columns: 1fr; gap: 12px; }
-  .footer-collabel { padding-top: 0; }
+  .footer-rowgroup:first-of-type { grid-template-columns: 1fr; gap: 12px; }
+  .footer-rowgroup:first-of-type .footer-collabel { padding-top: 0; }
+  .footer-rowgroup:nth-of-type(2) { grid-template-columns: auto 1fr; gap: 20px; }
   .footer-reel { align-self: stretch; width: 100%; cursor: default; }
   .footer-legal { flex-direction: column; align-items: flex-start; }
 }
