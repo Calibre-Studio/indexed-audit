@@ -16,11 +16,11 @@ const fragmentMono = Fragment_Mono({
 });
 
 export const metadata = {
-  title: "AI Visibility Audit — Calibre Studio",
+  title: "AI Visibility Audit | Calibre Studio",
   description:
     "See how AI sees your business. A free audit of the signals ChatGPT, Claude, Gemini, Grok, Copilot and Google AI Overviews read before they recommend anyone.",
   openGraph: {
-    title: "AI Visibility Audit — Calibre Studio",
+    title: "AI Visibility Audit | Calibre Studio",
     description:
       "See how AI sees your business. The signals AI reads before it recommends you, scored.",
     type: "website",

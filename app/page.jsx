@@ -329,11 +329,11 @@ function Report({ report, shownScore, barsReady }) {
             <div className="layer" key={l.key}>
               <div className="layer-top">
                 <span className="layer-name">{l.name}</span>
-                <span className="layer-num">{val ?? "—"}</span>
+                <span className="layer-num">{val ?? "-"}</span>
               </div>
               <p className="layer-q">{l.q}</p>
               <div className="track"><span className="fill" style={{ "--v": barsReady ? (val ?? 0) / 100 : 0 }} /></div>
-              {provisional && <p className="layer-note">Provisional — confirmed in the full audit.</p>}
+              {provisional && <p className="layer-note">Provisional, confirmed in the full audit.</p>}
             </div>
           );
         })}
@@ -380,7 +380,7 @@ function Report({ report, shownScore, barsReady }) {
 
       <div className="cta reveal">
         <h2>Found is half of it. Then you have to be seen.</h2>
-        <p>We fix what this audit found, then make the brand worth remembering — Authority, Trust, and where you stand across every AI engine.</p>
+        <p>We fix what this audit found, then make the brand worth remembering: Authority, Trust, and where you stand across every AI engine.</p>
         <a className="btn-link" href={CALENDLY}><span>Book your visibility call</span><span className="arr" aria-hidden="true">→</span></a>
       </div>
     </main>
