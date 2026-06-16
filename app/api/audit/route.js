@@ -8,14 +8,15 @@ const MODEL = process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001";
 
 const SYSTEM = `You are the audit engine of Calibre Studio's AI Visibility Audit, built on the AI SEO Kit DCAT method (Discoverability, Clarity, Authority, Trust).
 
-Rules — these are hard, not preferences:
+Rules (these are hard, not preferences):
 - No fabrication. Every finding must trace to a signal in the data provided. If a signal is absent, do not invent it.
 - You can only see the homepage HTML signals and homepage text. You CANNOT query ChatGPT/Perplexity/Gemini/Google AI Overviews. So:
   - Score DISCOVERABILITY and CLARITY confidently from the signals.
   - For AUTHORITY and TRUST, give a low-confidence provisional read and say plainly that the real measurement (third-party citations + recommendation strength across five AI engines) happens in the full paid audit.
 - Severity tiers: critical (AI cannot reliably read/understand the page), high (materially hurts citation odds), medium (worth fixing), low (polish).
 - Voice: direct, spare, no hype words. Short declarative sentences.
-- Treat the CURRENT DATE given in the prompt as authoritative for "today". Never flag a copyright year or any date as stale, wrong, or anomalous unless it is clearly AFTER the current date. A current-year copyright is correct — do not tell them to change it.
+- Never use em dashes or en dashes (the "—" or "–" characters) anywhere in your output. Use a comma, a period, parentheses, or the word "to" instead. For numeric ranges use a plain hyphen, for example "Days 1-30".
+- Treat the CURRENT DATE given in the prompt as authoritative for "today". Never flag a copyright year or any date as stale, wrong, or anomalous unless it is clearly AFTER the current date. A current-year copyright is correct, so do not tell them to change it.
 
 Return ONLY valid JSON, no markdown, no preamble, matching exactly:
 {
@@ -113,7 +114,7 @@ function deterministicReport(audit) {
   if (!s.metaDescription) { clar -= 18; findings.push({ id: "F" + (findings.length + 1), layer: "Clarity", severity: "high", evidence: "No meta description.", fix: "Write a one-sentence description of what the business is and who it serves." }); }
   if (!s.title) { clar -= 20; findings.push({ id: "F" + (findings.length + 1), layer: "Clarity", severity: "critical", evidence: "No <title>.", fix: "Add a clear, specific page title." }); }
   if (s.h1Count === 0) { clar -= 14; findings.push({ id: "F" + (findings.length + 1), layer: "Clarity", severity: "high", evidence: "No H1 on the homepage.", fix: "Add a single H1 that states the offer plainly." }); }
-  if (!s.ogImage) { clar -= 8; findings.push({ id: "F" + (findings.length + 1), layer: "Clarity", severity: "medium", evidence: "No og:image — link shares render blank.", fix: "Add og:image, og:title, og:description." }); }
+  if (!s.ogImage) { clar -= 8; findings.push({ id: "F" + (findings.length + 1), layer: "Clarity", severity: "medium", evidence: "No og:image, so link shares render blank.", fix: "Add og:image, og:title, og:description." }); }
 
   const discoverability = clamp(disc);
   const clarity = clamp(clar);
@@ -172,6 +173,25 @@ function validReport(d) {
   return !!(d && d.scores && typeof d.scores.overall === "number" && Array.isArray(d.findings));
 }
 
+// Hard guarantee: no em or en dashes anywhere in the rendered report text.
+// Numeric ranges (1–30) become hyphens; prose dashes become commas.
+function stripDashes(v) {
+  if (typeof v === "string") {
+    return v
+      .replace(/(\d)\s*[—–]\s*(\d)/g, "$1-$2")
+      .replace(/\s*[—–]\s*/g, ", ")
+      .replace(/,\s*,/g, ", ")
+      .replace(/\s+,/g, ",");
+  }
+  if (Array.isArray(v)) return v.map(stripDashes);
+  if (v && typeof v === "object") {
+    const o = {};
+    for (const k in v) o[k] = stripDashes(v[k]);
+    return o;
+  }
+  return v;
+}
+
 export async function POST(req) {
   try {
     const { website } = await req.json();
@@ -213,7 +233,7 @@ export async function POST(req) {
       console.error("Audit fell back to deterministic after retries (no valid tool output).");
       return Response.json(deterministicReport(audit));
     }
-    return Response.json({ url: audit.url, signals: audit.signals, ...data, model: MODEL });
+    return Response.json({ url: audit.url, signals: audit.signals, ...stripDashes(data), model: MODEL });
   } catch (e) {
     return Response.json({ error: String(e?.message || e) }, { status: 500 });
   }
