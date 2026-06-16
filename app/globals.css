@@ -107,12 +107,13 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.04em; line-height: 1.04; margi
 .field input:-webkit-autofill,
 .field input:-webkit-autofill:hover,
 .field input:-webkit-autofill:focus,
-.field input:-webkit-autofill:active {
-  -webkit-text-fill-color: var(--ink);
-  -webkit-box-shadow: 0 0 0 100px var(--bg) inset;
-  box-shadow: 0 0 0 100px var(--bg) inset;
+.field input:-webkit-autofill:active,
+.field input:autofill {
+  -webkit-text-fill-color: var(--ink) !important;
+  -webkit-box-shadow: 0 0 0 100px var(--bg) inset !important;
+  box-shadow: 0 0 0 100px var(--bg) inset !important;
   caret-color: var(--ink);
-  transition: background-color 9999s ease-in-out 0s;
+  transition: background-color 100000000s ease 0s !important;
 }
 
 .btn-primary {
