@@ -15,6 +15,7 @@ Rules — these are hard, not preferences:
   - For AUTHORITY and TRUST, give a low-confidence provisional read and say plainly that the real measurement (third-party citations + recommendation strength across five AI engines) happens in the full paid audit.
 - Severity tiers: critical (AI cannot reliably read/understand the page), high (materially hurts citation odds), medium (worth fixing), low (polish).
 - Voice: direct, spare, no hype words. Short declarative sentences.
+- Treat the CURRENT DATE given in the prompt as authoritative for "today". Never flag a copyright year or any date as stale, wrong, or anomalous unless it is clearly AFTER the current date. A current-year copyright is correct — do not tell them to change it.
 
 Return ONLY valid JSON, no markdown, no preamble, matching exactly:
 {
@@ -28,7 +29,8 @@ Return ONLY valid JSON, no markdown, no preamble, matching exactly:
 Aim for 5-9 findings, ordered by severity.`;
 
 function buildPrompt(audit) {
-  return `SITE: ${audit.url}
+  return `CURRENT DATE: ${new Date().toISOString().slice(0, 10)}
+SITE: ${audit.url}
 
 STRUCTURAL SIGNALS (from the homepage + site root):
 ${JSON.stringify(audit.signals, null, 2)}
@@ -88,17 +90,34 @@ function deterministicReport(audit) {
   };
 }
 
-function parseJson(raw) {
+// Robust JSON extraction: strips code fences, scans balanced braces (string-aware
+// so braces inside strings don't fool it), repairs trailing commas, and tolerates
+// any prose before/after the object.
+function extractJson(raw) {
   if (!raw) return null;
-  let t = raw.trim().replace(/^```(json)?/i, "").replace(/```$/i, "").trim();
+  const t = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "").trim();
   const start = t.indexOf("{");
-  const end = t.lastIndexOf("}");
-  if (start === -1 || end === -1) return null;
-  try {
-    return JSON.parse(t.slice(start, end + 1));
-  } catch {
-    return null;
+  if (start === -1) return null;
+  let depth = 0, inStr = false, esc = false, end = -1;
+  for (let i = start; i < t.length; i++) {
+    const c = t[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === '"') inStr = false;
+    } else if (c === '"') inStr = true;
+    else if (c === "{") depth++;
+    else if (c === "}") { depth--; if (depth === 0) { end = i; break; } }
   }
+  const slice = end === -1 ? t.slice(start) : t.slice(start, end + 1);
+  for (const a of [slice, slice.replace(/,(\s*[}\]])/g, "$1")]) {
+    try { return JSON.parse(a); } catch {}
+  }
+  return null;
+}
+
+function validReport(d) {
+  return !!(d && d.scores && typeof d.scores.overall === "number" && Array.isArray(d.findings));
 }
 
 export async function POST(req) {
@@ -119,16 +138,26 @@ export async function POST(req) {
     }
 
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const msg = await client.messages.create({
-      model: MODEL,
-      max_tokens: 4096,
-      system: SYSTEM,
-      messages: [{ role: "user", content: buildPrompt(audit) }],
-    });
-    const raw = msg.content?.[0]?.text || "";
-    const data = parseJson(raw);
-    if (!data || !data.scores) {
-      console.error("Audit fell back to deterministic. Model output (first 600 chars):", raw.slice(0, 600));
+    const basePrompt = buildPrompt(audit);
+    let data = null, lastRaw = "";
+    for (let attempt = 0; attempt < 2 && !data; attempt++) {
+      const nudge = attempt === 0 ? "" : "\n\nReturn ONLY the complete, valid JSON object — no prose, no code fences.";
+      const msg = await client.messages.create({
+        model: MODEL,
+        max_tokens: 8192,
+        system: SYSTEM,
+        messages: [
+          { role: "user", content: basePrompt + nudge },
+          { role: "assistant", content: "{" }, // prefill: forces a JSON-only continuation (no preamble/markdown)
+        ],
+      });
+      // The prefilled "{" is not echoed back by the API — prepend it to rebuild the object.
+      lastRaw = "{" + (msg.content?.[0]?.text || "");
+      const parsed = extractJson(lastRaw);
+      if (validReport(parsed)) data = parsed;
+    }
+    if (!data) {
+      console.error("Audit fell back to deterministic after retries. Raw (first 600):", lastRaw.slice(0, 600));
       return Response.json(deterministicReport(audit));
     }
     return Response.json({ url: audit.url, signals: audit.signals, ...data, model: MODEL });
