@@ -4,7 +4,9 @@ import { auditSite } from "../../../lib/checks";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-const MODEL = process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001";
+// Pinned. This tool must always run on Claude Sonnet 4.6.
+// Hardcoded so it can never silently fall back to another model via env config.
+const MODEL = "claude-sonnet-4-6";
 
 const SYSTEM = `You are the audit engine of Calibre Studio's AI Visibility Audit, built on the AI SEO Kit DCAT method (Discoverability, Clarity, Authority, Trust).
 
