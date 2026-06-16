@@ -77,6 +77,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [report, setReport] = useState(null);
+  const [reelOpen, setReelOpen] = useState(false);
   const [shownScore, setShownScore] = useState(0);
   const [barsReady, setBarsReady] = useState(false);
 
@@ -236,9 +237,9 @@ export default function Page() {
       <footer className="footer">
         <div className="wrap">
           <div className="footer-top">
-            <div className="footer-left">
+            <div className={`footer-left${reelOpen ? " reel-open" : ""}`}>
               <p className="footer-tagline reveal">Exploring the space between art and technology</p>
-              <a className="footer-reel" href={`${SITE}/works/directed`} target="_blank" rel="noopener noreferrer">
+              <button type="button" className="footer-reel" onClick={() => setReelOpen((o) => !o)} aria-expanded={reelOpen} aria-label={reelOpen ? "Collapse showreel" : "Expand showreel"}>
                 <span className="footer-reel-frame">
                   <video src={REEL} autoPlay muted loop playsInline preload="metadata" />
                 </span>
@@ -246,6 +247,10 @@ export default function Page() {
                   <span className="eyebrow"><span className="slash">//</span>Directed</span>
                   <span className="footer-reel-time">1:11</span>
                 </span>
+              </button>
+              <a className="footer-wordmark" href={SITE} aria-label="Calibre Studio">
+                <img src={LOGO} alt="Calibre Studio" />
+                <span className="footer-reg" aria-hidden="true">©</span>
               </a>
             </div>
             <div className="footer-right">
@@ -269,17 +274,10 @@ export default function Page() {
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="footer-band">
-            <a className="footer-wordmark" href={SITE} aria-label="Calibre Studio">
-              <img src={LOGO} alt="Calibre Studio" />
-              <span className="footer-reg" aria-hidden="true">©</span>
-            </a>
-            <div className="footer-band-actions">
-              <button type="button" className="footer-totop" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Back to top <span aria-hidden="true">↑</span></button>
-              <a className="btn-link footer-book" href={CALENDLY} target="_blank" rel="noopener noreferrer"><span>Book Meeting</span></a>
+              <div className="footer-actions">
+                <button type="button" className="footer-totop" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Back to top <span aria-hidden="true">↑</span></button>
+                <a className="btn-link footer-book" href={CALENDLY} target="_blank" rel="noopener noreferrer"><span>Book Meeting</span></a>
+              </div>
             </div>
           </div>
 
