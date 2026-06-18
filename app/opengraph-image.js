@@ -30,28 +30,30 @@ export default async function Image() {
       >
         <div style={{ position: "absolute", top: 0, left: 0, width: 1200, height: 8, backgroundColor: "#000000" }} />
 
-        <div style={{ display: "flex", alignItems: "center", marginTop: 84, marginLeft: 80 }}>
+        <div style={{ display: "flex", alignItems: "center", marginTop: 100, marginLeft: 80 }}>
           <img src={ICON} width={26} height={26} style={{ width: 26, height: 26, objectFit: "contain" }} />
           <div style={{ display: "flex", marginLeft: 24, fontSize: 28, letterSpacing: 20, color: "#6e6e6e", fontWeight: 400 }}>
             AI VISIBILITY AUDIT
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", marginTop: 46, marginLeft: 80, fontSize: 92, fontWeight: 700, color: "#000000", lineHeight: 1.04, letterSpacing: -2 }}>
+        <div style={{ display: "flex", flexDirection: "column", marginTop: 48, marginLeft: 80, fontSize: 92, fontWeight: 700, color: "#000000", lineHeight: 1.05, letterSpacing: -3 }}>
           <div style={{ display: "flex" }}>See how AI sees</div>
           <div style={{ display: "flex" }}>your business.</div>
         </div>
 
-        <div style={{ position: "absolute", left: 80, bottom: 54, display: "flex", fontSize: 25, color: "#000000" }}>
-          indexed.calibrestudio.co
+        <div style={{ position: "absolute", left: 80, bottom: 58, width: 1040, display: "flex", flexDirection: "column" }}>
+          <div style={{ width: "100%", height: 1, backgroundColor: "rgba(0,0,0,0.14)" }} />
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 30 }}>
+            <div style={{ display: "flex", fontSize: 25, color: "#000000" }}>indexed.calibrestudio.co</div>
+            <img
+              src={WORDMARK}
+              width={320}
+              height={40}
+              style={{ width: 320, height: 40, objectFit: "contain", objectPosition: "right center" }}
+            />
+          </div>
         </div>
-
-        <img
-          src={WORDMARK}
-          width={340}
-          height={44}
-          style={{ position: "absolute", right: 80, bottom: 44, width: 340, height: 44, objectFit: "contain", objectPosition: "right center" }}
-        />
       </div>
     ),
     {
