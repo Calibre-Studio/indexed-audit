@@ -6,7 +6,8 @@ export const alt = "AI Visibility Audit by Calibre Studio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const LOGO = "https://cdn.calibrestudio.co/Branding/Calibre_Studio-logo.png";
+const ICON = "https://cdn.calibrestudio.co/Branding/CALIBRE-ICON-BLK.png";
+const WORDMARK = "https://cdn.calibrestudio.co/Branding/Calibre_Studio-logo.png";
 
 export default async function Image() {
   const [regular, bold] = await Promise.all([
@@ -29,8 +30,11 @@ export default async function Image() {
       >
         <div style={{ position: "absolute", top: 0, left: 0, width: 1200, height: 8, backgroundColor: "#000000" }} />
 
-        <div style={{ display: "flex", marginTop: 92, marginLeft: 80, fontSize: 26, letterSpacing: 6, color: "#6e6e6e", fontWeight: 400 }}>
-          // AI VISIBILITY AUDIT
+        <div style={{ display: "flex", alignItems: "center", marginTop: 84, marginLeft: 80 }}>
+          <img src={ICON} width={26} height={26} style={{ width: 26, height: 26, objectFit: "contain" }} />
+          <div style={{ display: "flex", marginLeft: 24, fontSize: 28, letterSpacing: 20, color: "#6e6e6e", fontWeight: 400 }}>
+            AI VISIBILITY AUDIT
+          </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", marginTop: 46, marginLeft: 80, fontSize: 92, fontWeight: 700, color: "#000000", lineHeight: 1.04, letterSpacing: -2 }}>
@@ -43,10 +47,10 @@ export default async function Image() {
         </div>
 
         <img
-          src={LOGO}
-          width={260}
-          height={34}
-          style={{ position: "absolute", right: 80, bottom: 48, width: 260, height: 34, objectFit: "contain", objectPosition: "right center" }}
+          src={WORDMARK}
+          width={340}
+          height={44}
+          style={{ position: "absolute", right: 80, bottom: 44, width: 340, height: 44, objectFit: "contain", objectPosition: "right center" }}
         />
       </div>
     ),
