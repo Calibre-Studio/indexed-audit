@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 export const alt = "AI Visibility Audit by Calibre Studio";
 export const size = { width: 1200, height: 630 };
@@ -8,8 +10,8 @@ const LOGO = "https://cdn.calibrestudio.co/Branding/Calibre_Studio-logo.png";
 
 export default async function Image() {
   const [regular, bold] = await Promise.all([
-    fetch(new URL("./og-regular.ttf", import.meta.url)).then((r) => r.arrayBuffer()),
-    fetch(new URL("./og-bold.ttf", import.meta.url)).then((r) => r.arrayBuffer()),
+    readFile(join(process.cwd(), "app/og-regular.ttf")),
+    readFile(join(process.cwd(), "app/og-bold.ttf")),
   ]);
 
   return new ImageResponse(
@@ -40,7 +42,12 @@ export default async function Image() {
           indexed.calibrestudio.co
         </div>
 
-        <img src={LOGO} style={{ position: "absolute", right: 80, bottom: 48, height: 34 }} />
+        <img
+          src={LOGO}
+          width={260}
+          height={34}
+          style={{ position: "absolute", right: 80, bottom: 48, width: 260, height: 34, objectFit: "contain", objectPosition: "right center" }}
+        />
       </div>
     ),
     {
