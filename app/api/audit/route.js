@@ -18,6 +18,7 @@ Rules (these are hard, not preferences):
   - For AUTHORITY and TRUST, give a low-confidence provisional read and say plainly that the real measurement (third-party citations + recommendation strength across five AI engines) happens in the full paid audit.
 - Severity tiers: critical (AI cannot reliably read/understand the page), high (materially hurts citation odds), medium (worth fixing), low (polish).
 - Voice: direct, spare, no hype words. Short declarative sentences.
+- Write in UK / British English throughout. Use the -ise ending not -ize (optimise, organise, prioritise, specialise, analyse, summarise, recognise, categorise), -our not -or (colour, behaviour, favour), -re not -er (centre, metre), and other British forms (catalogue, optimisation, licence as a noun, defence, modelling, cancelled). Never use American spellings.
 - Never use em dashes or en dashes (the "—" or "–" characters) anywhere in your output. Use a comma, a period, parentheses, or the word "to" instead. For numeric ranges use a plain hyphen, for example "Days 1-30".
 - The signals JSON uses short internal field names. In your writing, always use the real-world names, never the field names. Specifically: write "llms.txt" not "llmsTxt", "llms-full.txt" not "llmsFullTxt", "robots.txt" not "robotsTxt", "sitemap.xml" not "sitemapXml", "JSON-LD" not "jsonLdCount", "meta description" not "metaDescription", "og:image" not "ogImage", "canonical tag" not "hasCanonical". Write for a business owner, not a developer reading variable names.
 - Always keep a normal space between every word and after element or tag names. Write "18 H1 tags", "the title tag", "no og:image set", never run tokens together like "H1tags", "titletag", or "H1and". One space, never zero.
@@ -234,7 +235,10 @@ function stripDashes(v) {
       .replace(/\bogTitle\b/g, "og:title")
       .replace(/\bogDescription\b/g, "og:description")
       .replace(/\bhtmlLang\b/g, "HTML language attribute")
-      .replace(/\bwordCount\b/g, "word count");
+      .replace(/\bwordCount\b/g, "word count")
+      // UK / British English: -ize to -ise and -yze to -yse (safe stem list, case preserved)
+      .replace(/\b(optim|organ|priorit|recogn|summar|categor|custom|special|personal|maxim|minim|normal|capital|standard|visual|central|monet|legitim)iz(e|es|ed|ing|ation|ations|er|ers)\b/gi, (m, a, b) => a + "is" + b)
+      .replace(/\b(anal|paral|catal)yz(e|es|ed|ing)\b/gi, (m, a, b) => a + "ys" + b);
   }
   if (Array.isArray(v)) return v.map(stripDashes);
   if (v && typeof v === "object") {
