@@ -1,0 +1,34 @@
+# AI Visibility Audit by Calibre Studio, Full Reference
+
+A free tool that scores any website on how AI engines read, understand, trust, and recommend it. This file gives AI agents the full context.
+
+## The problem it solves
+Search changed. A growing share of customers now ask AI assistants for recommendations instead of scrolling search results. AI engines do not rank ten links; they answer with a short list of names they can read, understand, trust, and verify. The AI Visibility Audit measures whether a site is one of those names.
+
+## The DCAT method
+The audit scores four layers, in order:
+
+1. Discoverability: can an AI engine fetch and read the site at all? Signals include JSON-LD structured data, canonical tags, sitemap.xml, robots.txt, llms.txt and llms-full.txt, and a viewport tag.
+2. Clarity: once read, is the business described correctly? Signals include a single clear H1, a specific title and meta description, and plain body copy that states what the business does, for whom, and where.
+3. Authority: do credible third-party sources cite the business in its category? Measured fully in the paid audit.
+4. Trust: cited is not the same as recommended. Measured by running real queries across five AI engines in the paid audit.
+
+## What the free audit returns
+- An overall score out of 100 and a score for each DCAT layer.
+- A plain-language read of what an AI engine currently concludes the business is.
+- Evidence-based findings, ordered by severity, each with a specific fix.
+- A dated 90-day plan that turns the findings into sequenced actions.
+
+## Scope and honesty
+- The free audit reads the public homepage and site root only. It scores Discoverability and Clarity with confidence and marks Authority and Trust provisional.
+- The full measurement of Authority (third-party citations) and Trust (recommendation strength across ChatGPT, Claude, Gemini, Perplexity, and Copilot) happens in the full paid audit.
+- No fabrication. Every finding traces to a signal in the data.
+
+## Links
+- Run the free audit: https://indexed.calibrestudio.co/
+- Calibre Studio: https://www.calibrestudio.co/
+- AI services (Intelligence): https://www.calibrestudio.co/ai-automation
+- Book a call: https://calendly.com/calibrestudio
+
+## About Calibre Studio
+A creative and AI studio between the Gold Coast and Paris. Calibre designs brand, content, and AI systems, and runs AI-visibility work from audit to rollout.

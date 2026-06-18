@@ -1,0 +1,17 @@
+# AI Visibility Audit by Calibre Studio
+
+> A free tool that scores any website on how AI engines read, understand, trust, and recommend it. Built on the DCAT method: Discoverability, Clarity, Authority, Trust.
+
+## What it does
+- Reads your public homepage and site-root signals (structured data, headings, meta, llms.txt, sitemap, robots).
+- Scores Discoverability and Clarity from the structural signals it can see.
+- Gives a provisional read on Authority and Trust, confirmed in the full paid audit.
+- Returns plain-language findings and a dated 90-day plan.
+
+## Use it
+- Run the free audit: https://indexed.calibrestudio.co/
+- Calibre Studio: https://www.calibrestudio.co/
+- Book a call: https://calendly.com/calibrestudio
+
+## About
+Built by Calibre Studio, a creative and AI studio between the Gold Coast and Paris. The audit measures the signals ChatGPT, Claude, Gemini, Grok, Copilot, and Google AI Overviews read before they recommend a business.
