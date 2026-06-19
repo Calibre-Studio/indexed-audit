@@ -278,7 +278,7 @@ export default function Page() {
                   <li><a href={`${SITE}/about`}>Branding</a><span aria-hidden="true">•</span></li>
                   <li><a href={`${SITE}/about`}>Marketing</a><span aria-hidden="true">•</span></li>
                   <li><a href={`${SITE}/about`}>Content</a><span aria-hidden="true">•</span></li>
-                  <li><a href={`${SITE}/ai-automation`}>Intelligence</a><span aria-hidden="true">•</span></li>
+                  <li><a href={`${SITE}/intelligence`}>Intelligence</a><span aria-hidden="true">•</span></li>
                 </ul>
               </div>
               <div className="footer-rowgroup">

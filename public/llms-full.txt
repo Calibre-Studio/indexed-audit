@@ -46,7 +46,7 @@ The audit is the Be Found half of Calibre's offering: making a brand legible and
 ## Links
 - Run the free audit: https://indexed.calibrestudio.co/
 - Calibre Studio: https://www.calibrestudio.co/
-- AI services (Intelligence): https://www.calibrestudio.co/ai-automation
+- AI services (Intelligence): https://www.calibrestudio.co/intelligence
 - Book a call: https://calendly.com/calibrestudio
 
 ## About Calibre Studio
