@@ -1,5 +1,4 @@
 import "./globals.css";
-import Script from "next/script";
 import { Inter, Fragment_Mono } from "next/font/google";
 
 const inter = Inter({
@@ -85,12 +84,6 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
         />
         {children}
-        <Script
-          src="https://widgets.leadconnectorhq.com/loader.js"
-          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
-          data-widget-id="68ccba8e12ad321a12f9d532"
-          strategy="lazyOnload"
-        />
       </body>
     </html>
   );
