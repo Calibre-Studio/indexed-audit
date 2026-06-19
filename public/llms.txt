@@ -8,6 +8,12 @@
 - Gives a provisional read on Authority and Trust, confirmed in the full paid audit.
 - Returns plain-language findings and a dated 90-day plan.
 
+## Why it matters
+Being recommended by AI is a measurable acquisition channel, not a vanity metric. Independent research from SimilarWeb (2026) found people are 2.5 times more likely to visit a brand an AI recommends over a competitor, often days later through search, which is why standard analytics undercount it.
+
+## Where it fits
+Traditional SEO ranks your pages; AI visibility decides whether you are recommended inside the answer. You need both. The audit is the Be Found half of Calibre's offering. Be Seen is the brand, content, and film work that makes people remember you once AI has put you in the room.
+
 ## Use it
 - Run the free audit: https://indexed.calibrestudio.co/
 - Calibre Studio: https://www.calibrestudio.co/

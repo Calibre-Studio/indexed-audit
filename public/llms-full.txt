@@ -5,6 +5,9 @@ A free tool that scores any website on how AI engines read, understand, trust, a
 ## The problem it solves
 Search changed. A growing share of customers now ask AI assistants for recommendations instead of scrolling search results. AI engines do not rank ten links; they answer with a short list of names they can read, understand, trust, and verify. The AI Visibility Audit measures whether a site is one of those names.
 
+## Why it matters
+AI visibility is a measurable acquisition channel, not a soft metric. Independent research from SimilarWeb (The Downstream Impact of AI Visibility, 2026) tracked thousands of real journeys and found people are 2.5 times more likely to visit a brand an AI recommended over its competitor, even with no link to click. AI tends to own the start of the journey, and the visit often lands later through search, which is why referral analytics undercount AI's impact.
+
 ## The DCAT method
 The audit scores four layers, in order:
 
@@ -23,6 +26,22 @@ The audit scores four layers, in order:
 - The free audit reads the public homepage and site root only. It scores Discoverability and Clarity with confidence and marks Authority and Trust provisional.
 - The full measurement of Authority (third-party citations) and Trust (recommendation strength across ChatGPT, Claude, Gemini, Grok, Perplexity, Copilot, and Google AI Overviews) happens in the full paid audit.
 - No fabrication. Every finding traces to a signal in the data.
+
+## How it relates to SEO
+Traditional SEO competes for rankings and clicks. AI visibility, also called answer engine optimisation (AEO) or generative engine optimisation (GEO), competes to be the cited, recommended source inside an AI answer. They are complementary: SEO gets you ranked, AI visibility gets you recommended, and brands need both.
+
+## Competitive framing
+When a customer asks an AI engine for a recommendation in a category, the engine already names someone. The audit shows whether that name is you or a competitor, and what is holding your citations back.
+
+## Where this sits in Calibre's work
+The audit is the Be Found half of Calibre's offering: making a brand legible and recommendable to AI engines. The Be Seen half is the brand, content, and film work that makes a person remember the brand once AI has surfaced it. Calibre runs both, from audit to rollout, under its Intelligence offering.
+
+## Common questions
+- Is this different from SEO? Yes. SEO competes for rankings and clicks; AEO competes to be the source cited inside an AI answer. You want both.
+- Which AI engines matter? The ones customers use: ChatGPT, Claude, Gemini, Perplexity, Copilot, and Google AI Overviews. Gemini is Google's chatbot; AI Overviews are the AI answers in Google Search, where most buying-intent queries happen.
+- How fast can it change? Structural fixes such as schema, agent files, and clearer copy land immediately; citation and recommendation shifts take a few weeks as engines recrawl.
+- Does AI visibility actually drive customers? Yes. SimilarWeb (2026) found people are 2.5 times more likely to visit a brand an AI recommends, often via a delayed search visit that analytics miss.
+- What does the free audit cost? Nothing. It reads your public site only and returns a score, findings, and a dated 90-day plan.
 
 ## Links
 - Run the free audit: https://indexed.calibrestudio.co/

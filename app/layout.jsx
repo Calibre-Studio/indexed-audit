@@ -69,7 +69,7 @@ const SCHEMA = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       description:
-        "A free tool that scores any website on how AI engines read, understand, trust, and recommend it, using the DCAT method: Discoverability, Clarity, Authority, Trust.",
+        "A free tool that scores any website on how AI engines read, understand, trust, and recommend it, using the DCAT method: Discoverability, Clarity, Authority, Trust. AI visibility decides whether a brand is recommended inside an AI answer, a measurable acquisition channel that traditional SEO and standard analytics miss.",
       offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       provider: { "@id": "https://www.calibrestudio.co/#org" },
     },
