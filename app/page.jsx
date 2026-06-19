@@ -212,7 +212,7 @@ export default function Page() {
           <h1 className="display"><AnimWords text="See how AI sees your business." base={0.12} step={0.06} /></h1>
           <p className="lead ar" style={{ "--d": "0.62s" }}>
             Search changed. Your customers ask AI now, and it answers with a shortlist. This audit scores
-            the signals ChatGPT, Claude, Gemini, Grok, Copilot and Google AI Overviews read before they recommend anyone.
+            the signals ChatGPT, Claude, Gemini, Grok, Perplexity and Copilot read before they recommend anyone.
           </p>
 
           <form className="audit-form ar" style={{ "--d": "0.78s" }} onSubmit={run}>

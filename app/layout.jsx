@@ -19,7 +19,7 @@ export const metadata = {
   metadataBase: new URL("https://indexed.calibrestudio.co"),
   title: "AI Visibility Audit | Calibre Studio",
   description:
-    "See how AI sees your business. A free audit of the signals ChatGPT, Claude, Gemini, Grok, Copilot and Google AI Overviews read before they recommend anyone.",
+    "See how AI sees your business. A free audit of the signals ChatGPT, Claude, Gemini, Grok, Perplexity and Copilot read before they recommend anyone.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "AI Visibility Audit | Calibre Studio",

@@ -14,4 +14,4 @@
 - Book a call: https://calendly.com/calibrestudio
 
 ## About
-Built by Calibre Studio, a creative and AI studio between the Gold Coast and Paris. The audit measures the signals ChatGPT, Claude, Gemini, Grok, Copilot, and Google AI Overviews read before they recommend a business.
+Built by Calibre Studio, a creative and AI studio between the Gold Coast and Paris. The audit measures the signals ChatGPT, Claude, Gemini, Grok, Perplexity, and Copilot read before they recommend a business.

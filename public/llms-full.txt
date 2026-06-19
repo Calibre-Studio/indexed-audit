@@ -21,7 +21,7 @@ The audit scores four layers, in order:
 
 ## Scope and honesty
 - The free audit reads the public homepage and site root only. It scores Discoverability and Clarity with confidence and marks Authority and Trust provisional.
-- The full measurement of Authority (third-party citations) and Trust (recommendation strength across ChatGPT, Claude, Gemini, Perplexity, and Copilot) happens in the full paid audit.
+- The full measurement of Authority (third-party citations) and Trust (recommendation strength across ChatGPT, Claude, Gemini, Grok, Perplexity, and Copilot) happens in the full paid audit.
 - No fabrication. Every finding traces to a signal in the data.
 
 ## Links
