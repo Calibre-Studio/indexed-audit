@@ -354,7 +354,7 @@ function Report({ report, shownScore, barsReady }) {
               <div className="finding" key={i}>
                 <div className={"sev " + f.severity}>{f.severity}</div>
                 <div>
-                  <p className="finding-layer">{f.layer}</p>
+                  <p className="finding-layer">{(f.id || "F" + String(i + 1).padStart(2, "0"))} · {f.layer}</p>
                   <p className="finding-evidence">{f.evidence}</p>
                   <p className="finding-fix">{f.fix}</p>
                 </div>

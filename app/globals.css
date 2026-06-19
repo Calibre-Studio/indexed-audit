@@ -288,3 +288,15 @@ body.js .hero-reveal.in .aw { animation: heroRise 0.85s var(--ease) both; animat
   .btn-primary:hover .arr, .btn-link:hover .arr, .nav-cta:hover .arr { transform: none; }
   .loading .bar::after { animation: none; width: 100%; }
 }
+
+/* ---------- print / saved PDF ---------- */
+@media print {
+  body.js .reveal, body.js .stagger > *, body.js .hero-reveal .ar, body.js .hero-reveal .aw, body.js .ar, body.js .aw {
+    opacity: 1 !important; transform: none !important; animation: none !important; filter: none !important;
+  }
+  .nav { position: static; background: #fff; backdrop-filter: none; }
+  .nav-links, .footer, .loading, .proof { display: none !important; }
+  .report { padding-top: 22px; padding-bottom: 0; }
+  .score-block, .dcat, .layer, .ai-thinks, .finding, .phase, .cta { break-inside: avoid; page-break-inside: avoid; }
+  .section-label { break-after: avoid; page-break-after: avoid; }
+}
