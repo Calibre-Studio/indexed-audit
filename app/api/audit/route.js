@@ -274,7 +274,7 @@ export async function POST(req) {
     for (let attempt = 0; attempt < 2 && !data; attempt++) {
       const msg = await client.messages.create({
         model: MODEL,
-        max_tokens: 8192,
+        max_tokens: 6000,
         system: SYSTEM,
         tools: [AUDIT_TOOL],
         tool_choice: { type: "tool", name: "emit_audit" },
