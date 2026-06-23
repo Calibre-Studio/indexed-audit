@@ -279,6 +279,7 @@ export default function Page() {
                   <li><a href={`${SITE}/about`}>Marketing</a><span aria-hidden="true">•</span></li>
                   <li><a href={`${SITE}/about`}>Content</a><span aria-hidden="true">•</span></li>
                   <li><a href={`${SITE}/intelligence`}>Intelligence</a><span aria-hidden="true">•</span></li>
+                  <li><a href="https://getfound.calibrestudio.co">Get Found</a><span aria-hidden="true">•</span></li>
                 </ul>
               </div>
               <div className="footer-rowgroup">
@@ -381,7 +382,10 @@ function Report({ report, shownScore, barsReady }) {
       <div className="cta reveal">
         <h2>Found is half of it. Then you have to be seen.</h2>
         <p>We fix what this audit found, then make the brand worth remembering: Authority, Trust, and where you stand across every AI engine.</p>
-        <a className="btn-link" href={CALENDLY}><span>Book your visibility call</span><span className="arr" aria-hidden="true">→</span></a>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "14px 26px", alignItems: "center" }}>
+          <a className="btn-link" href="https://getfound.calibrestudio.co"><span>See how we get you found</span><span className="arr" aria-hidden="true">→</span></a>
+          <a className="btn-link" href={CALENDLY}><span>Book a call</span><span className="arr" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </main>
   );
