@@ -294,7 +294,7 @@ export default function Page() {
               </div>
               <div className="footer-actions">
                 <button type="button" className="footer-totop" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Back to top <span aria-hidden="true">↑</span></button>
-                <a className="btn-link footer-book" href={CALENDLY} target="_blank" rel="noopener noreferrer"><span>Book Meeting</span></a>
+                <a className="btn-link footer-book" href={CALENDLY} target="_blank" rel="noopener noreferrer"><span>Book a call</span></a>
               </div>
             </div>
           </div>
