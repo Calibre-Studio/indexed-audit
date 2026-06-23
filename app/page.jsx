@@ -382,7 +382,7 @@ function Report({ report, shownScore, barsReady }) {
       <div className="cta reveal">
         <h2>Found is half of it. Then you have to be seen.</h2>
         <p>We fix what this audit found, then make the brand worth remembering: Authority, Trust, and where you stand across every AI engine.</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "14px 26px", alignItems: "center" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "14px 26px", alignItems: "center" }}>
           <a className="btn-link" href="https://getfound.calibrestudio.co"><span>See how we get you found</span><span className="arr" aria-hidden="true">→</span></a>
           <a className="btn-link" href={CALENDLY}><span>Book a call</span><span className="arr" aria-hidden="true">→</span></a>
         </div>
