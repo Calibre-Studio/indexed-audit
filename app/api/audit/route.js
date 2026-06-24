@@ -2,8 +2,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import { auditSite } from "../../../lib/checks";
 
 export const runtime = "nodejs";
-// 120s headroom so heavy sites (Sonnet + slow scrapes near 50-55s) never hit the limit.
-export const maxDuration = 120;
+// 300s ceiling (Pro + Fluid Compute) so even a slow scrape or a long generation
+// completes instead of being killed at the limit.
+export const maxDuration = 300;
 
 // Pinned. This tool must always run on Claude Sonnet 4.6.
 // Hardcoded so it can never silently fall back to another model via env config.
@@ -271,7 +272,10 @@ export async function POST(req) {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
     const basePrompt = buildPrompt(audit);
     let data = null;
-    for (let attempt = 0; attempt < 2 && !data; attempt++) {
+    // Single pass. The forced tool returns schema-valid JSON on the first call almost
+    // every time; a second full Sonnet pass was what pushed slow sites past the limit.
+    // If this one pass fails validation, we fall through to the deterministic report below.
+    for (let attempt = 0; attempt < 1 && !data; attempt++) {
       const msg = await client.messages.create({
         model: MODEL,
         max_tokens: 6000,
