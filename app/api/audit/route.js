@@ -6,8 +6,9 @@ export const runtime = "nodejs";
 // completes instead of being killed at the limit.
 export const maxDuration = 300;
 
-// Pinned. This tool must always run on Claude Sonnet 4.6.
-// Hardcoded so it can never silently fall back to another model via env config.
+// Pinned to Sonnet 4.6 for output quality. Haiku's writing was too weak to convert
+// readers to the paid offer. The ~60s generation is kept alive by streaming heartbeats
+// in POST below, so the browser no longer times out before the report arrives.
 const MODEL = "claude-sonnet-4-6";
 
 const SYSTEM = `You are the audit engine of Calibre Studio's AI Visibility Audit, built on the AI SEO Kit DCAT method (Discoverability, Clarity, Authority, Trust).
@@ -253,53 +254,75 @@ function stripDashes(v) {
 }
 
 export async function POST(req) {
+  // Parse the body and fetch the site up front. These are fast, so any early exit
+  // (bad input, unreachable site, no API key) returns a plain JSON response immediately.
+  let website, audit;
   try {
-    const { website } = await req.json();
+    ({ website } = await req.json());
     if (!website) return Response.json({ error: "Missing website." }, { status: 400 });
-
-    const audit = await auditSite(website);
-    if (!audit.reachable) {
-      return Response.json(
-        { error: `Couldn't reach ${website} (status ${audit.status || "no response"}). Check the URL and try again.` },
-        { status: 200 }
-      );
-    }
-
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return Response.json(deterministicReport(audit));
-    }
-
-    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const basePrompt = buildPrompt(audit);
-    let data = null;
-    // Single pass. The forced tool returns schema-valid JSON on the first call almost
-    // every time; a second full Sonnet pass was what pushed slow sites past the limit.
-    // If this one pass fails validation, we fall through to the deterministic report below.
-    for (let attempt = 0; attempt < 1 && !data; attempt++) {
-      const msg = await client.messages.create({
-        model: MODEL,
-        max_tokens: 6000,
-        system: SYSTEM,
-        tools: [AUDIT_TOOL],
-        tool_choice: { type: "tool", name: "emit_audit" },
-        messages: [{ role: "user", content: basePrompt }],
-      });
-      const blocks = msg.content || [];
-      let candidate = blocks.find((b) => b.type === "tool_use")?.input || null;
-      if (!candidate) {
-        // Defensive: if a model ever answers in text despite the forced tool, parse it.
-        candidate = extractJson(blocks.find((b) => b.type === "text")?.text || "");
-      }
-      if (validReport(candidate)) data = candidate;
-    }
-    if (!data) {
-      console.error("Audit fell back to deterministic after retries (no valid tool output).");
-      return Response.json(deterministicReport(audit));
-    }
-    // Note: the raw signals object is intentionally NOT returned. The UI does not
-    // use it, and its camelCase keys should never reach the client payload.
-    return Response.json({ url: audit.url, ...stripDashes(data), model: MODEL });
+    audit = await auditSite(website);
   } catch (e) {
     return Response.json({ error: String(e?.message || e) }, { status: 500 });
   }
+  if (!audit.reachable) {
+    return Response.json(
+      { error: `Couldn't reach ${website} (status ${audit.status || "no response"}). Check the URL and try again.` },
+      { status: 200 }
+    );
+  }
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return Response.json(deterministicReport(audit));
+  }
+
+  // The Sonnet 4.6 generation can take ~60s. A plain awaited response sits idle that whole
+  // time and the browser/gateway drops the connection before the 200 arrives, which the UI
+  // shows as "Something went wrong". So we STREAM: open the connection immediately and flush
+  // a heartbeat space every few seconds to keep it warm, then send the final JSON once the
+  // model finishes. The heartbeats are whitespace, so the client's existing res.json()
+  // still parses the payload unchanged (JSON.parse ignores leading/trailing whitespace).
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      let finished = false;
+      const enq = (s) => { try { controller.enqueue(encoder.encode(s)); } catch {} };
+      enq(" "); // open the connection right away
+      const beat = setInterval(() => { if (!finished) enq(" "); }, 5000);
+      const send = (obj) => {
+        finished = true;
+        clearInterval(beat);
+        enq(JSON.stringify(obj));
+        try { controller.close(); } catch {}
+      };
+      try {
+        const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+        // Single forced-tool pass. The tool guarantees schema-valid JSON; if validation
+        // somehow fails, we fall back to the deterministic report rather than erroring.
+        const msg = await client.messages.create({
+          model: MODEL,
+          max_tokens: 6000,
+          system: SYSTEM,
+          tools: [AUDIT_TOOL],
+          tool_choice: { type: "tool", name: "emit_audit" },
+          messages: [{ role: "user", content: buildPrompt(audit) }],
+        });
+        const blocks = msg.content || [];
+        let candidate = blocks.find((b) => b.type === "tool_use")?.input || null;
+        if (!candidate) candidate = extractJson(blocks.find((b) => b.type === "text")?.text || "");
+        if (validReport(candidate)) {
+          // The raw signals object is intentionally not returned; the UI does not use it
+          // and its camelCase keys should never reach the client payload.
+          send({ url: audit.url, ...stripDashes(candidate), model: MODEL });
+        } else {
+          console.error("Audit fell back to deterministic (no valid tool output).");
+          send(deterministicReport(audit));
+        }
+      } catch (e) {
+        send({ error: String(e?.message || e) });
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+  });
 }
