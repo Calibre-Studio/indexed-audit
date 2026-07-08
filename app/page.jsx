@@ -271,17 +271,7 @@ export default function Page() {
               </a>
             </div>
             <div className="footer-right">
-              <div className="footer-rowgroup">
-                <span className="footer-collabel">Services</span>
-                <ul className="footer-list">
-                  <li><a href={`${SITE}/about`}>Strategy</a><span aria-hidden="true">•</span></li>
-                  <li><a href={`${SITE}/about`}>Branding</a><span aria-hidden="true">•</span></li>
-                  <li><a href={`${SITE}/about`}>Marketing</a><span aria-hidden="true">•</span></li>
-                  <li><a href={`${SITE}/about`}>Content</a><span aria-hidden="true">•</span></li>
-                  <li><a href={`${SITE}/intelligence`}>Intelligence</a><span aria-hidden="true">•</span></li>
-                  <li><a href="https://getfound.calibrestudio.co">Get Found</a><span aria-hidden="true">•</span></li>
-                </ul>
-              </div>
+              <div className="footer-rowgroup"><span className="footer-collabel">Be Found</span>span><ul className="footer-list"><li><a href="https://presence.calibrestudio.co/">Presence</a>a><span aria-hidden="true">•</span>span></li>li><li><a href="https://indexed.calibrestudio.co/">Free AI check</a>a><span aria-hidden="true">•</span>span></li>li><li><a href="https://getfound.calibrestudio.co/">Get Found</a>a><span aria-hidden="true">•</span>span></li>li><li><a href="https://ads.calibrestudio.co/">ChatGPT Ads</a>a><span aria-hidden="true">•</span>span></li>li><li><a href={`${SITE}/intelligence`}>Intelligence</a>a><span aria-hidden="true">•</span>span></li>li></ul>ul></div>div></div>
               <div className="footer-rowgroup">
                 <span className="footer-collabel">Follow</span>
                 <div className="footer-socials">
