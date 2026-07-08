@@ -300,3 +300,7 @@ body.js .hero-reveal.in .aw { animation: heroRise 0.85s var(--ease) both; animat
   .score-block, .dcat, .layer, .ai-thinks, .finding, .phase, .cta { break-inside: avoid; page-break-inside: avoid; }
   .section-label { break-after: avoid; page-break-after: avoid; }
 }
+
+
+/* print: force brand fills (fixes ghosted CTA buttons in saved PDF) */
+@media print { *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; } }
