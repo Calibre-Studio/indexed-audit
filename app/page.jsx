@@ -212,7 +212,7 @@ export default function Page() {
           <h1 className="display"><AnimWords text="See how AI sees your business." base={0.12} step={0.06} /></h1>
           <p className="lead ar" style={{ "--d": "0.62s" }}>
             Search changed. Your customers ask AI now, and it answers with a shortlist. This audit scores
-            the signals ChatGPT, Claude, Gemini, Grok, Perplexity, Copilot and Google AI Overviews read before they recommend anyone.
+            the signals ChatGPT, Claude, Gemini, Grok, Perplexity and Copilot read before they recommend anyone.
           </p>
 
           <form className="audit-form ar" style={{ "--d": "0.78s" }} onSubmit={run}>
@@ -271,7 +271,16 @@ export default function Page() {
               </a>
             </div>
             <div className="footer-right">
-              <div className="footer-rowgroup"><span className="footer-collabel">Be Found</span>span><ul className="footer-list"><li><a href="https://presence.calibrestudio.co/">Presence</a>a><span aria-hidden="true">•</span>span></li>li><li><a href="https://indexed.calibrestudio.co/">Free AI check</a>a><span aria-hidden="true">•</span>span></li>li><li><a href="https://getfound.calibrestudio.co/">Get Found</a>a><span aria-hidden="true">•</span>span></li>li><li><a href="https://ads.calibrestudio.co/">ChatGPT Ads</a>a><span aria-hidden="true">•</span>span></li>li><li><a href={`${SITE}/intelligence`}>Intelligence</a>a><span aria-hidden="true">•</span>span></li>li></ul>ul></div>div></div>
+              <div className="footer-rowgroup">
+                <span className="footer-collabel">Be Found</span>
+                <ul className="footer-list">
+                  <li><a href="https://presence.calibrestudio.co/">Presence</a><span aria-hidden="true">•</span></li>
+                  <li><a href="https://indexed.calibrestudio.co/">Free AI check</a><span aria-hidden="true">•</span></li>
+                  <li><a href="https://getfound.calibrestudio.co/">Get Found</a><span aria-hidden="true">•</span></li>
+                  <li><a href="https://ads.calibrestudio.co/">ChatGPT Ads</a><span aria-hidden="true">•</span></li>
+                  <li><a href={`${SITE}/intelligence`}>Intelligence</a><span aria-hidden="true">•</span></li>
+                </ul>
+              </div>
               <div className="footer-rowgroup">
                 <span className="footer-collabel">Follow</span>
                 <div className="footer-socials">
