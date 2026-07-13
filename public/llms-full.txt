@@ -38,7 +38,7 @@ The audit is the Be Found half of Calibre's offering: making a brand legible and
 
 ## Common questions
 - Is this different from SEO? Yes. SEO competes for rankings and clicks; AEO competes to be the source cited inside an AI answer. You want both.
-- Which AI engines matter? The ones customers use: ChatGPT, Claude, Gemini, Perplexity, Copilot, and Google AI Overviews. Gemini is Google's chatbot; AI Overviews are the AI answers in Google Search, where most buying-intent queries happen.
+- Which AI engines matter? The ones customers use: ChatGPT, Claude, Gemini, Grok, Perplexity, Copilot, and Google AI Overviews. Gemini is Google's chatbot; AI Overviews are the AI answers in Google Search, where most buying-intent queries happen.
 - How fast can it change? Structural fixes such as schema, agent files, and clearer copy land immediately; citation and recommendation shifts take a few weeks as engines recrawl.
 - Does AI visibility actually drive customers? Yes. SimilarWeb (2026) found people are 2.5 times more likely to visit a brand an AI recommends, often via a delayed search visit that analytics miss.
 - What does the free audit cost? Nothing. It reads your public site only and returns a score, findings, and a dated 90-day plan.
