@@ -291,14 +291,6 @@ export default function Page() {
                   ))}
                 </div>
               </div>
-              <div className="footer-rowgroup">
-                <span className="footer-collabel">Read</span>
-                <ul className="footer-list">
-                  <li><a href="https://www.calibrestudio.co/blog/show-up-in-chatgpt/">How to show up in ChatGPT</a><span aria-hidden="true">•</span></li>
-                  <li><a href="https://www.calibrestudio.co/blog/aeo-vs-geo/">AEO vs GEO</a><span aria-hidden="true">•</span></li>
-                  <li><a href="https://www.calibrestudio.co/blog/running-chatgpt-ads/">Running ChatGPT ads</a><span aria-hidden="true">•</span></li>
-                </ul>
-              </div>
               <div className="footer-actions">
                 <button type="button" className="footer-totop" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Back to top <span aria-hidden="true">↑</span></button>
                 <a className="btn-link footer-book" href={CALENDLY} target="_blank" rel="noopener noreferrer"><span>Book a call</span></a>
